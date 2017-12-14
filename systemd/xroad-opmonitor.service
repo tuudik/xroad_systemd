@@ -1,0 +1,15 @@
+[Unit]
+Description=X-Road opmonitor daemon
+After=network.target
+
+[Service]
+RestartSec=5
+User=xroad
+Group=xroad
+UMask=007
+ExecStartPre=/bin/sh -ec 'mkdir -p -m0755 /var/run/xroad && chown xroad:xroad /var/run/xroad && chown xroad:xroad /etc/xroad'
+ExecStart=/usr/share/xroad/bin/opmonitor.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

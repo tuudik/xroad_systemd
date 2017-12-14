@@ -1,0 +1,19 @@
+[Unit]
+Description=X-Road Jetty server
+After=network.target
+Wants=xroad-signer.service xroad-confclient.service
+
+[Service]
+PermissionsStartOnly=true
+RestartSec=5
+User=xroad
+Group=xroad
+UMask=007
+WorkingDirectory=/usr/share/xroad/jetty9
+ExecStartPre=/bin/sh -ec 'mkdir -p -m0755 /var/run/xroad && chown xroad:xroad /var/run/xroad && chown xroad:xroad /etc/xroad'
+ExecStartPre=/bin/sh -ec 'mkdir -p -m0755 /var/tmp/xroad && chown xroad:xroad /var/tmp/xroad'
+ExecStart=/usr/share/xroad/bin/jetty.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
